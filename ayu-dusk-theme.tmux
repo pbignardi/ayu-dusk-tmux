@@ -101,12 +101,25 @@ status_left() {
     set "status-left" "$line"
 }
 
+inactive_window() {
+    # $1 is bg color
+    # $2 is text color
+    line="#[fg=$1,bg=$1,nobold,nounderscore,noitalics]
+    #[fg=$2,bg=$1] #I 󰿟 #W 
+    #[fg=$1,bg=$1,nobold,nounderscore,noitalics]"
+    set "window-status-format" "$line"
+}
+
+active_window() {
+    # $1 is bg color
+    # $2 is text color
+    line="#[fg=$1,bg=$bar_bg_color,nobold,nounderscore,noitalics]
+    #[fg=$2,bg=$1,nobold] #I   #W 
+    #[fg=$1,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
+    set "window-status-current-format" "$line"
+}
+
 status_right $ayu_orange $ayu_black
 status_left $ayu_blue $ayu_mirage_bg
-
-inactive_window_fg="$ayu_comment_grey"
-set "window-status-format" "#[fg=$bar_bg_color,bg=$bar_bg_color,nobold,nounderscore,noitalics]#[fg=$inactive_window_fg,bg=$bar_bg_color] #I 󰿟 #W #[fg=$bar_bg_color,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
-
-current_window_bg="$ayu_mirage_bg"
-current_window_fg="$ayu_purple"
-set "window-status-current-format" "#[fg=$current_window_bg,bg=$bar_bg_color,nobold,nounderscore,noitalics]#[fg=$current_window_fg,bg=$current_window_bg,nobold] #I   #W #[fg=$current_window_bg,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
+inactive_window $bar_bg_color $ayu_comment_grey
+active_window $ayu_mirage_bg $ayu_purple
