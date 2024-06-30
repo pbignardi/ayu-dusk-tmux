@@ -84,21 +84,25 @@ set "@prefix_highlight_bg" "$ayu_green"
 set "@prefix_highlight_copy_mode_attr" "fg=$ayu_black,bg=$ayu_green"
 set "@prefix_highlight_output_prefix" "  "
 
-status_widgets=$(get "@ayu_widgets")
-time_format=$(get "@ayu_time_format" "%R")
-date_format=$(get "@ayu_date_format" "%d.%m.%Y")
+status_right() {
+    # $1 is main color
+    # $2 is text color
+    line="#[fg=$1,bg=$bar_bg_color,nobold,nounderscore,noitalics]
+    #[fg=$2,bg=$1,bold] 
+    #h "
+    set "status-right" "$line"
+}
 
-status_right_color="$ayu_orange"
-status_right_fg="$ayu_black"
-set "status-right" "#[fg=$status_right_color,bg=$bar_bg_color,nobold,nounderscore,noitalics]#[fg=$status_right_fg,bg=$status_right_color,bold] #h "
+status_left() {
+    # $1 is main color
+    # $2 is text color
+    line="#[fg=$2,bg=$1,bold] $session_icon  #S #{prefix_highlight}
+    #[fg=$1,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
+    set "status-left" "$line"
+}
 
-session_bg="$ayu_blue"
-session_fg="$ayu_mirage_bg"
-session_icon=""
-
-status_left=""
-set "status-left" "#[fg=$session_fg,bg=$session_bg,bold] $session_icon  #S #{prefix_highlight}#[fg=$session_bg,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
-
+status_right $ayu_orange $ayu_black
+status_left $ayu_blue $ayu_mirage_bg
 
 inactive_window_fg="$ayu_comment_grey"
 set "window-status-format" "#[fg=$bar_bg_color,bg=$bar_bg_color,nobold,nounderscore,noitalics]#[fg=$inactive_window_fg,bg=$bar_bg_color] #I 󰿟 #W #[fg=$bar_bg_color,bg=$bar_bg_color,nobold,nounderscore,noitalics]"
